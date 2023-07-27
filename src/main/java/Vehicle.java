@@ -42,13 +42,4 @@ public class Vehicle {
      */
     private String location;
 
-    /**
-     * The price of the car in Rupees.
-     */
-    private Double priceInRupees;
-
-    /**
-     * The mileage of the car in kilometers per liter (kmpl).
-     */
-    private Double mileageInKmpl;
 }

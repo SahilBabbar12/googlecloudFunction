@@ -68,13 +68,13 @@ public class PubSubDataHandler implements CloudEventsFunction {
         double mileageInKmpl = transformMileage(vehicleData
                 .getMileage());
 
-        vehicleData.setPriceInRupees(priceInRupees);
-        vehicleData.setMileageInKmpl(mileageInKmpl);
+        vehicleData.setPrice(priceInRupees);
+        vehicleData.setMileage(mileageInKmpl);
 
         logger.info("Mileage in kmpl: " + vehicleData
-                .getMileageInKmpl());
+                .getMileage());
         logger.info("Price in rupees: " + vehicleData
-                .getPriceInRupees());
+                .getPrice());
         saveDataToFirestore(vehicleData);
     }
     /**
