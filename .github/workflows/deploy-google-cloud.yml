@@ -6,13 +6,26 @@ on:
       - main
 
 jobs:
-  deploy_function:
-    runs-on: 'ubuntu-latest'
+  build:
+    runs-on: ubuntu-latest
     permissions:
-      contents: 'read'
-      id-token: 'write'
-
+      contents: read
+      packages: write
     steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: Setup Docker buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Build and Push Image
+        env:
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+        run: |
+          
+          docker login --username $username --password $password ghcr.io
+          docker build . --tag ghcr.io/sahilbabbar12/googlecloudFunction:latest
+          docker push ghcr.io/sahilbabbar12/googlecloudFunction:latest
+
       - name: Checkout code
         uses: actions/checkout@v2
 
