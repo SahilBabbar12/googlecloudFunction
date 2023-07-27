@@ -26,7 +26,7 @@ jobs:
         with:
           name: 'function-1'   # Replace with your Google Cloud Function name
           runtime: 'java17'   # Replace with the appropriate runtime
-          event_trigger_type: 'Cloud Pub/Sub'
+          event_trigger_type: 'google.pubsub.topic.publish'
           event_trigger_resource: 'projects/nodal-descent-389716/topics/pub-sub-Topic'
 
       # Example of using the output
