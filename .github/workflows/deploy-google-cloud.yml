@@ -24,7 +24,7 @@ jobs:
         id: deploy
         uses: google-github-actions/deploy-cloud-functions@v1
         with:
-          name: 'vehicle-function'   # Replace with your Google Cloud Function name
+          name: 'function-1'   # Replace with your Google Cloud Function name
           runtime: 'java17'   # Replace with the appropriate runtime
 
       # Example of using the output
