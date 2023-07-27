@@ -11,22 +11,8 @@ jobs:
       contents: read
       packages: write
     steps:
-      - name: checkout
-        uses: actions/checkout@v2
-      - name: Setup Docker buildx
-        uses: docker/setup-buildx-action@v2
-      - name: Build and Push Image
-        env:
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-        run: |
-          
-          docker login --username $username --password $password ghcr.io
-          docker build . --tag ghcr.io/sahilbabbar12/googlecloudfunction:latest
-          docker push ghcr.io/sahilbabbar12/googlecloudfunction:latest
-
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Authenticate with Google Cloud
         id: auth
