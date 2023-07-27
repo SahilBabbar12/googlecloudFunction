@@ -26,7 +26,7 @@ jobs:
         with:
           name: 'function-1'   # Replace with your Google Cloud Function name
           runtime: 'java17'   # Replace with the appropriate runtime
-          trigger: 'event'
+          event_trigger_type: 'Cloud Pub/Sub'
 
       # Example of using the output
       - name: Test the deployed function
