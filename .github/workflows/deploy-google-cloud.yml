@@ -22,8 +22,8 @@ jobs:
         run: |
           
           docker login --username $username --password $password ghcr.io
-          docker build . --tag ghcr.io/sahilbabbar12/googlecloudFunction:latest
-          docker push ghcr.io/sahilbabbar12/googlecloudFunction:latest
+          docker build . --tag ghcr.io/sahilbabbar12/googlecloudfunction:latest
+          docker push ghcr.io/sahilbabbar12/googlecloudfunction:latest
 
       - name: Checkout code
         uses: actions/checkout@v2
