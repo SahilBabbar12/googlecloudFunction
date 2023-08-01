@@ -28,6 +28,7 @@ jobs:
           runtime: 'java17'   # Replace with the appropriate runtime
           event_trigger_type: ${{ secrets.EVENT_TRIGGER_TYPE }}
           event_trigger_resource: ${{ secrets.EVENT_TRIGGER_RESOURCE }}
+          entry_point: 'com.knoldus.cloudfunction.PubSubDataHandler'
 
       # Example of using the output
       - name: Test the deployed function
