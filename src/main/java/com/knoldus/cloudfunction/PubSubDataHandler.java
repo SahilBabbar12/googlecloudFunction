@@ -1,3 +1,5 @@
+package com.knoldus.cloudfunction;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,6 +11,7 @@ import com.google.cloud.functions.CloudEventsFunction;
 import com.google.events.cloud.pubsub.v1.Message;
 import com.google.events.cloud.pubsub.v1.MessagePublishedData;
 import io.cloudevents.CloudEvent;
+import model.Vehicle;
 
 import java.util.Base64;
 import java.util.logging.Logger;
@@ -29,7 +32,7 @@ public class PubSubDataHandler implements CloudEventsFunction {
     private static Firestore firestore;
 
     /**
-     * Constructor for the PubSubDataHandler class.
+     * Constructor for the com.knoldus.cloudfunction.PubSubDataHandler class.
      * Initializes the Firestore instance.
      */
     public PubSubDataHandler() {
@@ -99,10 +102,10 @@ public class PubSubDataHandler implements CloudEventsFunction {
     }
     /**
      * Saves the data from the provided
-     * Vehicle object to Firestore.
+     * model.Vehicle object to Firestore.
      *
      * @param vehicleData
-     * The Vehicle object containing the data to be saved.
+     * The model.Vehicle object containing the data to be saved.
      */
     void saveDataToFirestore(
             final Vehicle vehicleData) {
