@@ -15,8 +15,8 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Authenticate with Google Cloud
-        id: auth
-        uses: google-github-actions/auth@v1
+        id: deploy
+        uses: google-github-actions/deploy-cloud-functions@main
         with:
           credentials_json: ${{ secrets.GCLOUD_APPLICATION_CREDENTIALS }}
 
