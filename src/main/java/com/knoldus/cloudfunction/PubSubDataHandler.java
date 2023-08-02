@@ -113,7 +113,7 @@ public class PubSubDataHandler implements CloudEventsFunction {
                 .valueOf(vehicleData.getCarId());
         logger.info("document id : " + documentId);
         DocumentReference destinationDocRef =
-                firestore.collection("vehicle")
+                firestore.collection("Car")
                         .document(documentId);
         destinationDocRef.set(vehicleData);
     }

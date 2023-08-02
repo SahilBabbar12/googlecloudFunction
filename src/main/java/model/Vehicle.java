@@ -39,9 +39,4 @@ public class Vehicle {
      */
     private Double price;
 
-    /**
-     * The location of the car.
-     */
-    private String location;
-
 }
