@@ -27,7 +27,7 @@ jobs:
           name: 'vehicle'   # Replace with your Google Cloud Function name
           runtime: 'java17'   # Replace with the appropriate runtime
           event_trigger_type: ${{ secrets.EVENT_TRIGGER_TYPE }}
-          event_trigger_resource: 'projects/nodal-descent-389716/topics/vehicle'
+          event_trigger_resource: 'projects/white-dynamo-394708/topics/vehicle'
           entry_point: 'com.knoldus.cloudfunction.PubSubDataHandler'
 
       # Example of using the output
