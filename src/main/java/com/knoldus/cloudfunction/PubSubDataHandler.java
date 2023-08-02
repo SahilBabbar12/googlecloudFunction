@@ -65,6 +65,7 @@ public class PubSubDataHandler implements CloudEventsFunction {
         logger.info("Pub/Sub message: " + decodedData);
 
         Vehicle vehicleData = objectMapper.readValue(decodedData, Vehicle.class);
+        logger.info(vehicleData.toString());
 
         double priceInRupees = transformPrice(vehicleData
                 .getPrice());
