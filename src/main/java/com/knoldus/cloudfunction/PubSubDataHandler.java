@@ -32,7 +32,7 @@ public class PubSubDataHandler implements CloudEventsFunction {
     private static Firestore firestore;
 
     /**
-     * Constructor for the com.knoldus.cloudfunction.PubSubDataHandler class.
+     * Constructor for the PubSubDataHandler class.
      * Initializes the Firestore instance.
      */
     public PubSubDataHandler() {
