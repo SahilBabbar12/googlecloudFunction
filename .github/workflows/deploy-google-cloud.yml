@@ -16,11 +16,6 @@ jobs:
           distribution: 'adopt'
           java-version: 17
       - run: mvn clean install --batch-mode --errors --fail-at-end
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: google-cloud-function.jar
-          path: target/
       - name: Checkout code
         uses: actions/checkout@v3
 
