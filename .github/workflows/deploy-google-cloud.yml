@@ -6,10 +6,9 @@ on:
 
 jobs:
   setup-build-deploy:
-    name: Setup, Build, and Deploy
+    name: Deploy
     runs-on: ubuntu-latest
     steps:
-
       - name: Authenticate with Google Cloud
         id: auth
         uses: google-github-actions/auth@v1
