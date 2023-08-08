@@ -110,12 +110,9 @@ public class PubSubDataHandler implements CloudEventsFunction {
      */
     void saveDataToFirestore(
             final Vehicle vehicleData) {
-        String documentId = String
-                .valueOf(vehicleData.getCarId());
-        logger.info("document id : " + documentId);
         DocumentReference destinationDocRef =
                 firestore.collection("Car")
-                        .document(documentId);
+                        .document();
         destinationDocRef.set(vehicleData);
     }
 }
