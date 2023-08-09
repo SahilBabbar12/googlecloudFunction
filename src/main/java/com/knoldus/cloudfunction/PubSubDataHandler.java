@@ -31,6 +31,7 @@ public class PubSubDataHandler implements CloudEventsFunction {
      * interacting with the Firestore database.
      */
     private static Firestore firestore;
+    private Integer count =0;
 
     /**
      * Constructor for the PubSubDataHandler class.
@@ -54,7 +55,6 @@ public class PubSubDataHandler implements CloudEventsFunction {
      */
     @Override
     public void accept(final CloudEvent event) throws JsonProcessingException {
-        Integer count=0;
         String cloudEventData = new String(event.getData().toBytes());
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature
@@ -64,7 +64,7 @@ public class PubSubDataHandler implements CloudEventsFunction {
         String encodedData = message.getData();
         String decodedData = new String(Base64.getDecoder().decode(encodedData));
 
-        logger.info("Pub/Sub message: " + decodedData + "count: " + count++);
+        logger.info("Pub/Sub message: " + decodedData);
 
         Vehicle vehicleData = objectMapper.readValue(decodedData, Vehicle.class);
         logger.info(vehicleData.toString());
@@ -81,7 +81,7 @@ public class PubSubDataHandler implements CloudEventsFunction {
                 .getMileage());
         logger.info("Price in rupees: " + vehicleData
                 .getPrice());
-        saveDataToFirestore(vehicleData,++count);
+        saveDataToFirestore(vehicleData);
     }
     /**
      * Converts the price from dollars to rupees.
@@ -111,11 +111,12 @@ public class PubSubDataHandler implements CloudEventsFunction {
      * The model.Vehicle object containing the data to be saved.
      */
     void saveDataToFirestore(
-            final Vehicle vehicleData,Integer count) {
+            final Vehicle vehicleData) {
         DocumentReference destinationDocRef =
                 firestore.collection("Car")
                         .document();
         destinationDocRef.set(vehicleData);
-        logger.info("count"+ count);
+        logger.info("count"+count);
+        count++;
     }
 }
