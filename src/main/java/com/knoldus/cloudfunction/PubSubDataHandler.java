@@ -31,7 +31,7 @@ public class PubSubDataHandler implements CloudEventsFunction {
      * interacting with the Firestore database.
      */
     private static Firestore firestore;
-    private Integer count =0;
+    private static Integer count =0;
 
     /**
      * Constructor for the PubSubDataHandler class.
