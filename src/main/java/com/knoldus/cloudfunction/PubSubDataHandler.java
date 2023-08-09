@@ -62,7 +62,7 @@ public class PubSubDataHandler implements CloudEventsFunction {
 
             logger.info("Event Counter: " + count);
         } catch (Exception e) {
-            logger.severe("Error processing CloudEvent: " + e.getMessage());
+            logger.info("Error processing CloudEvent: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -84,7 +84,7 @@ public class PubSubDataHandler implements CloudEventsFunction {
             logger.info("Saved data to Firestore. Count: " + count);
             count++;
         } catch (Exception e) {
-            logger.severe("Error saving data to Firestore: " + e.getMessage());
+            logger.info("Error saving data to Firestore: " + e.getMessage());
             e.printStackTrace();
         }
     }
