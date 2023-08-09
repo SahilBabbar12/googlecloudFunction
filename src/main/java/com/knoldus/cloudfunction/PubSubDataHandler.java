@@ -25,7 +25,7 @@ public class PubSubDataHandler implements CloudEventsFunction {
 
     private static final double PRICE_CONVERSION_RATE_ = 82.11;
     private static final double MILEAGE_CONVERSION_RATE_ = 1.609344;
-    private Integer count=0;
+
     /**
      * The Firestore instance for
      * interacting with the Firestore database.
@@ -54,7 +54,7 @@ public class PubSubDataHandler implements CloudEventsFunction {
      */
     @Override
     public void accept(final CloudEvent event) throws JsonProcessingException {
-
+        Integer count=0;
         String cloudEventData = new String(event.getData().toBytes());
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature
@@ -64,7 +64,7 @@ public class PubSubDataHandler implements CloudEventsFunction {
         String encodedData = message.getData();
         String decodedData = new String(Base64.getDecoder().decode(encodedData));
 
-        logger.info("Pub/Sub message: " + decodedData +"count: "+count++);
+        logger.info("Pub/Sub message: " + decodedData + "count: " + count++);
 
         Vehicle vehicleData = objectMapper.readValue(decodedData, Vehicle.class);
         logger.info(vehicleData.toString());
@@ -81,7 +81,7 @@ public class PubSubDataHandler implements CloudEventsFunction {
                 .getMileage());
         logger.info("Price in rupees: " + vehicleData
                 .getPrice());
-        saveDataToFirestore(vehicleData);
+        saveDataToFirestore(vehicleData,++count);
     }
     /**
      * Converts the price from dollars to rupees.
@@ -111,10 +111,11 @@ public class PubSubDataHandler implements CloudEventsFunction {
      * The model.Vehicle object containing the data to be saved.
      */
     void saveDataToFirestore(
-            final Vehicle vehicleData) {
+            final Vehicle vehicleData,Integer count) {
         DocumentReference destinationDocRef =
                 firestore.collection("Car")
                         .document();
         destinationDocRef.set(vehicleData);
+        logger.info("count"+ count);
     }
 }
