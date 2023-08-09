@@ -25,6 +25,7 @@ public class PubSubDataHandler implements CloudEventsFunction {
 
     private static final double PRICE_CONVERSION_RATE_ = 82.11;
     private static final double MILEAGE_CONVERSION_RATE_ = 1.609344;
+    private Integer count=0;
     /**
      * The Firestore instance for
      * interacting with the Firestore database.
@@ -53,6 +54,8 @@ public class PubSubDataHandler implements CloudEventsFunction {
      */
     @Override
     public void accept(final CloudEvent event) throws JsonProcessingException {
+        count++;
+        logger.info("count "+count);
         String cloudEventData = new String(event.getData().toBytes());
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature
