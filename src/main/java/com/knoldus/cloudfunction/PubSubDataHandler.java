@@ -82,6 +82,9 @@ public class PubSubDataHandler implements CloudEventsFunction {
         logger.info("Price in rupees: " + vehicleData
                 .getPrice());
         saveDataToFirestore(vehicleData);
+        count++;
+
+        logger.info("Event Counter: " + count);
     }
     /**
      * Converts the price from dollars to rupees.
@@ -116,7 +119,7 @@ public class PubSubDataHandler implements CloudEventsFunction {
                 firestore.collection("Car")
                         .document();
         destinationDocRef.set(vehicleData);
-        logger.info("count"+count);
+        logger.info("count" + count);
         count++;
     }
 }
