@@ -54,8 +54,7 @@ public class PubSubDataHandler implements CloudEventsFunction {
      */
     @Override
     public void accept(final CloudEvent event) throws JsonProcessingException {
-        count++;
-        logger.info("count "+count);
+
         String cloudEventData = new String(event.getData().toBytes());
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature
@@ -65,7 +64,7 @@ public class PubSubDataHandler implements CloudEventsFunction {
         String encodedData = message.getData();
         String decodedData = new String(Base64.getDecoder().decode(encodedData));
 
-        logger.info("Pub/Sub message: " + decodedData);
+        logger.info("Pub/Sub message: " + decodedData +"count: "+count++);
 
         Vehicle vehicleData = objectMapper.readValue(decodedData, Vehicle.class);
         logger.info(vehicleData.toString());
