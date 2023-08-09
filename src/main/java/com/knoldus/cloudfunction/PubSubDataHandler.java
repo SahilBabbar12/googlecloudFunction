@@ -42,8 +42,8 @@ public class PubSubDataHandler implements CloudEventsFunction {
             Message message = data.getMessage();
             String encodedData = message.getData();
             String decodedData = new String(Base64.getDecoder().decode(encodedData));
-
-            logger.info("Pub/Sub message: " + decodedData);
+            count++;
+            logger.info("Pub/Sub message: " + decodedData + count);
 
             Vehicle vehicleData = objectMapper.readValue(decodedData, Vehicle.class);
             logger.info("Received vehicle data: " + vehicleData.toString());
