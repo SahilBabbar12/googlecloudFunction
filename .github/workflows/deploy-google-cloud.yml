@@ -31,6 +31,7 @@ jobs:
         with:
           name: 'vehicle'
           runtime: 'java17'
+          region: 'us-west1'
           event_trigger_type: 'google.pubsub.topic.publish'
           event_trigger_resource: ${{ secrets.EVENT_TRIGGER_RESOURCE}}
           entry_point: 'com.knoldus.cloudfunction.PubSubDataHandler'
