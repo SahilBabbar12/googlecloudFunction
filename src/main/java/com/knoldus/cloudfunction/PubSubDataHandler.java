@@ -13,9 +13,7 @@ import com.google.events.cloud.pubsub.v1.MessagePublishedData;
 import io.cloudevents.CloudEvent;
 import model.Vehicle;
 
-import java.util.ArrayList;
 import java.util.Base64;
-import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -33,7 +31,7 @@ public class PubSubDataHandler implements CloudEventsFunction {
      * interacting with the Firestore database.
      */
     private static Firestore firestore;
-    private List<Vehicle> vehicleList = new ArrayList<>();
+
     /**
      * Constructor for the PubSubDataHandler class.
      * Initializes the Firestore instance.
@@ -56,39 +54,33 @@ public class PubSubDataHandler implements CloudEventsFunction {
      */
     @Override
     public void accept(final CloudEvent event) throws JsonProcessingException {
-        try {
-            String cloudEventData = new String(event.getData().toBytes());
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        String cloudEventData = new String(event.getData().toBytes());
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature
+                .FAIL_ON_UNKNOWN_PROPERTIES, false);
+        MessagePublishedData data = objectMapper.readValue(cloudEventData, MessagePublishedData.class);
+        Message message = data.getMessage();
+        String encodedData = message.getData();
+        String decodedData = new String(Base64.getDecoder().decode(encodedData));
 
-            MessagePublishedData data = objectMapper.readValue(cloudEventData, MessagePublishedData.class);
-            Message message = data.getMessage();
-            String encodedData = message.getData();
-            String decodedData = new String(Base64.getDecoder().decode(encodedData));
+        logger.info("Pub/Sub message: " + decodedData);
 
-            logger.info("Pub/Sub message: " + decodedData);
+        Vehicle vehicleData = objectMapper.readValue(decodedData, Vehicle.class);
+        logger.info(vehicleData.toString());
 
-            Vehicle vehicleData = objectMapper.readValue(decodedData, Vehicle.class);
-            logger.info(vehicleData.toString());
+        double priceInRupees = transformPrice(vehicleData
+                .getPrice());
+        double mileageInKmpl = transformMileage(vehicleData
+                .getMileage());
 
-            double priceInRupees = transformPrice(vehicleData.getPrice());
-            double mileageInKmpl = transformMileage(vehicleData.getMileage());
+        vehicleData.setPrice(priceInRupees);
+        vehicleData.setMileage(mileageInKmpl);
 
-            vehicleData.setPrice(priceInRupees);
-            vehicleData.setMileage(mileageInKmpl);
-
-            logger.info("Mileage in kmpl: " + vehicleData.getMileage());
-            logger.info("Price in rupees: " + vehicleData.getPrice());
-
-            // Add the processed vehicleData to the ArrayList
-            vehicleList.add(vehicleData);
-
-            // Print the ArrayList size
-            logger.info("ArrayList size: " + vehicleList.size());
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
+        logger.info("Mileage in kmpl: " + vehicleData
+                .getMileage());
+        logger.info("Price in rupees: " + vehicleData
+                .getPrice());
+        saveDataToFirestore(vehicleData);
     }
     /**
      * Converts the price from dollars to rupees.
@@ -119,7 +111,7 @@ public class PubSubDataHandler implements CloudEventsFunction {
      */
     void saveDataToFirestore(
             final Vehicle vehicleData) {
-                firestore.collection("Car")
-                        .add(vehicleData);
+        firestore.collection("Car")
+                .add(vehicleData);
     }
 }
