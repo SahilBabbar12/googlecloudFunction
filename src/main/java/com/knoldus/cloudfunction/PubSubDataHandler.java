@@ -4,11 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.gax.rpc.ApiException;
-import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.FirestoreOptions;
 import com.google.cloud.functions.CloudEventsFunction;
-import com.google.events.cloud.pubsub.v1.Message;
 import com.google.events.cloud.pubsub.v1.MessagePublishedData;
 import io.cloudevents.CloudEvent;
 import model.Vehicle;
@@ -59,27 +57,11 @@ public class PubSubDataHandler implements CloudEventsFunction {
         objectMapper.configure(DeserializationFeature
                 .FAIL_ON_UNKNOWN_PROPERTIES, false);
         MessagePublishedData data = objectMapper.readValue(cloudEventData, MessagePublishedData.class);
-        Message message = data.getMessage();
-        String encodedData = message.getData();
-        String decodedData = new String(Base64.getDecoder().decode(encodedData));
-
-        logger.info("Pub/Sub message: " + decodedData);
+        String message = data.getMessage().getData();
+        String decodedData = new String(Base64.getDecoder().decode(message));
 
         Vehicle vehicleData = objectMapper.readValue(decodedData, Vehicle.class);
         logger.info(vehicleData.toString());
-
-        double priceInRupees = transformPrice(vehicleData
-                .getPrice());
-        double mileageInKmpl = transformMileage(vehicleData
-                .getMileage());
-
-        vehicleData.setPrice(priceInRupees);
-        vehicleData.setMileage(mileageInKmpl);
-
-        logger.info("Mileage in kmpl: " + vehicleData
-                .getMileage());
-        logger.info("Price in rupees: " + vehicleData
-                .getPrice());
         saveDataToFirestore(vehicleData);
     }
     /**
