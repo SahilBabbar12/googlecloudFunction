@@ -1,0 +1,4 @@
+#currency:
+#  api:
+#    url: https://api.currencyapi.com/v3/latest?apikey=
+#    key : cur_live_oIpEFhIQiGuzS8KvMfqBIw5RAgqE8XRBAF5jRuso
