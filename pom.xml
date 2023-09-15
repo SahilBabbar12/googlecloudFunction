@@ -25,6 +25,22 @@
         </dependencies>
     </dependencyManagement>
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-elasticsearch -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-elasticsearch</artifactId>
+            <version>5.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>co.elastic.clients</groupId>
+            <artifactId>elasticsearch-java</artifactId>
+            <version>8.9.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20230618</version>
+        </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
@@ -42,20 +58,11 @@
             <version>1.0.4</version>
         </dependency>
         <dependency>
-            <groupId>com.google.cloud.functions</groupId>
-            <artifactId>functions-framework-api</artifactId>
-            <version>1.0.4</version>
-        </dependency>
-        <dependency>
             <groupId>com.google.cloud</groupId>
             <artifactId>google-cloudevent-types</artifactId>
             <version>0.1.5</version>
         </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.8.8</version>
-        </dependency>
+
         <dependency>
             <groupId>io.cloudevents</groupId>
             <artifactId>cloudevents-api</artifactId>
@@ -71,4 +78,27 @@
             <version>9.2.0</version>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <!--
+                  Google Cloud Functions Framework Maven plugin
+                  This plugin allows you to run Cloud Functions Java
+                  code locally.
+                  Use the following terminal command to run a
+                  given function locally:
+
+                  mvn function:run -Drun.functionTarget=
+                  your.package.yourFunction
+                -->
+                <groupId>com.google.cloud.functions</groupId>
+                <artifactId>function-maven-plugin</artifactId>
+                <version>0.9.7</version>
+                <configuration>
+                    <functionTarget> com.knoldus.cloudfunction.PubSubDataHandler
+                    </functionTarget>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

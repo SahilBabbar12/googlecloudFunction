@@ -1,7 +1,10 @@
-package model;
+package com.knoldus.cloudfunction.model;
 
 import lombok.Data;
 
+/**
+ * Represents a Vehicle.
+ */
 @Data
 public class Vehicle {
     /**
